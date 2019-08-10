@@ -39,8 +39,6 @@ type Scale = {
 }
 
 
-
-
 let ustr (x:string) = ustring.Make(x)
 
 let stop = Action Application.RequestStop
