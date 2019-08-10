@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29201.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "scale", "scale.fsproj", "{225D386E-431B-40CB-8F44-947428BA4E14}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{225D386E-431B-40CB-8F44-947428BA4E14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{225D386E-431B-40CB-8F44-947428BA4E14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{225D386E-431B-40CB-8F44-947428BA4E14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{225D386E-431B-40CB-8F44-947428BA4E14}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CE2A6B29-3420-4198-AF9B-8156E227DC24}
+	EndGlobalSection
+EndGlobal

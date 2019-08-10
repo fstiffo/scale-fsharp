@@ -1,0 +1,150 @@
+<SOAP-ENV:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:clr="http://schemas.microsoft.com/clr/" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+  <SOAP-ENV:Body>
+    <a1:Program_x002B_Scale id="ref-1" xmlns:a1="http://schemas.microsoft.com/clr/assem/scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull">
+      <tempo_zero_x0040_ href="#ref-2" />
+      <attuale_x0040_ href="#ref-3" />
+      <condomini_x0040_ href="#ref-4" />
+      <movimenti_x0040_ href="#ref-5" />
+    </a1:Program_x002B_Scale>
+    <a1:Program_x002B_Data id="ref-2" xmlns:a1="http://schemas.microsoft.com/clr/assem/scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull">
+      <item1>2019</item1>
+      <item2>7</item2>
+      <item3>1</item3>
+    </a1:Program_x002B_Data>
+    <a2:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_null_x005D__x005D_ id="ref-3" xmlns:a2="http://schemas.microsoft.com/clr/nsassem/System.Tuple`2[[Program+Data%2C%20scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull]%2C[Program+Param%2C%20scale%2C%20Version%3D1.0.0/System.Private.CoreLib%2C%20Version%3D4.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3D7cec85d7bea7798e">
+      <m_Item1 href="#ref-2" />
+      <m_Item2 href="#ref-6" />
+    </a2:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_null_x005D__x005D_>
+    <a3:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_null_x005D__x005D_ id="ref-4" xmlns:a3="http://schemas.microsoft.com/clr/nsassem/Microsoft.FSharp.Collections.FSharpList`1[[Program+Condomino%2C%20scale%2C%20Version%3D1.0.0/FSharp.Core%2C%20Version%3D4.7.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Db03f5f7f11d50a3a">
+      <head href="#ref-7" />
+      <tail href="#ref-8" />
+    </a3:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_null_x005D__x005D_>
+    <a4:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_7cec85d7bea7798e_x005D__x005D_ id="ref-5" xmlns:a4="http://schemas.microsoft.com/clr/nsassem/Microsoft.FSharp.Collections.FSharpList`1[[System.Tuple`2[[Program+Data%2C%20scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull]%2C[Program+Operazione%2C%20scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull]]%2C%20System.Private.CoreLib%2C%20Version%3D4.0.0/FSharp.Core%2C%20Version%3D4.7.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Db03f5f7f11d50a3a">
+      <head href="#ref-9" />
+      <tail href="#ref-10" />
+    </a4:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_7cec85d7bea7798e_x005D__x005D_>
+    <a1:Program_x002B_Param id="ref-6" xmlns:a1="http://schemas.microsoft.com/clr/assem/scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull">
+      <costo_scale_x0040_>20</costo_scale_x0040_>
+      <num_pulizie_mese_x0040_>2</num_pulizie_mese_x0040_>
+      <quota_mensile_x0040_>12</quota_mensile_x0040_>
+    </a1:Program_x002B_Param>
+    <a1:Program_x002B_Condomino id="ref-7" xmlns:a1="http://schemas.microsoft.com/clr/assem/scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull">
+      <_tag>0</_tag>
+    </a1:Program_x002B_Condomino>
+    <a3:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_null_x005D__x005D_ id="ref-8" xmlns:a3="http://schemas.microsoft.com/clr/nsassem/Microsoft.FSharp.Collections.FSharpList`1[[Program+Condomino%2C%20scale%2C%20Version%3D1.0.0/FSharp.Core%2C%20Version%3D4.7.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Db03f5f7f11d50a3a">
+      <head href="#ref-11" />
+      <tail href="#ref-12" />
+    </a3:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_null_x005D__x005D_>
+    <a5:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_null_x005D__x005D_ id="ref-9" xmlns:a5="http://schemas.microsoft.com/clr/nsassem/System.Tuple`2[[Program+Data%2C%20scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull]%2C[Program+Operazione%2C%20scale%2C%20Version%3D1.0.0/System.Private.CoreLib%2C%20Version%3D4.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3D7cec85d7bea7798e">
+      <m_Item1 href="#ref-2" />
+      <m_Item2 href="#ref-13" />
+    </a5:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_null_x005D__x005D_>
+    <a4:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_7cec85d7bea7798e_x005D__x005D_ id="ref-10" xmlns:a4="http://schemas.microsoft.com/clr/nsassem/Microsoft.FSharp.Collections.FSharpList`1[[System.Tuple`2[[Program+Data%2C%20scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull]%2C[Program+Operazione%2C%20scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull]]%2C%20System.Private.CoreLib%2C%20Version%3D4.0.0/FSharp.Core%2C%20Version%3D4.7.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Db03f5f7f11d50a3a">
+      <head href="#ref-14" />
+      <tail href="#ref-15" />
+    </a4:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_7cec85d7bea7798e_x005D__x005D_>
+    <a1:Program_x002B_Condomino id="ref-11" xmlns:a1="http://schemas.microsoft.com/clr/assem/scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull">
+      <_tag>1</_tag>
+    </a1:Program_x002B_Condomino>
+    <a3:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_null_x005D__x005D_ id="ref-12" xmlns:a3="http://schemas.microsoft.com/clr/nsassem/Microsoft.FSharp.Collections.FSharpList`1[[Program+Condomino%2C%20scale%2C%20Version%3D1.0.0/FSharp.Core%2C%20Version%3D4.7.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Db03f5f7f11d50a3a">
+      <head href="#ref-16" />
+      <tail href="#ref-17" />
+    </a3:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_null_x005D__x005D_>
+    <a1:Program_x002B_Operazione_x002B_AltroVersamento id="ref-13" xmlns:a1="http://schemas.microsoft.com/clr/assem/scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull">
+      <item1 id="ref-18">Appianamento</item1>
+      <item2>333</item2>
+      <_tag>3</_tag>
+      <Operazione_x002B__tag>3</Operazione_x002B__tag>
+    </a1:Program_x002B_Operazione_x002B_AltroVersamento>
+    <a5:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_null_x005D__x005D_ id="ref-14" xmlns:a5="http://schemas.microsoft.com/clr/nsassem/System.Tuple`2[[Program+Data%2C%20scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull]%2C[Program+Operazione%2C%20scale%2C%20Version%3D1.0.0/System.Private.CoreLib%2C%20Version%3D4.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3D7cec85d7bea7798e">
+      <m_Item1 href="#ref-2" />
+      <m_Item2 href="#ref-19" />
+    </a5:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_null_x005D__x005D_>
+    <a4:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_7cec85d7bea7798e_x005D__x005D_ id="ref-15" xmlns:a4="http://schemas.microsoft.com/clr/nsassem/Microsoft.FSharp.Collections.FSharpList`1[[System.Tuple`2[[Program+Data%2C%20scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull]%2C[Program+Operazione%2C%20scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull]]%2C%20System.Private.CoreLib%2C%20Version%3D4.0.0/FSharp.Core%2C%20Version%3D4.7.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Db03f5f7f11d50a3a">
+      <head href="#ref-20" />
+      <tail href="#ref-21" />
+    </a4:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_7cec85d7bea7798e_x005D__x005D_>
+    <a1:Program_x002B_Condomino id="ref-16" xmlns:a1="http://schemas.microsoft.com/clr/assem/scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull">
+      <_tag>2</_tag>
+    </a1:Program_x002B_Condomino>
+    <a3:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_null_x005D__x005D_ id="ref-17" xmlns:a3="http://schemas.microsoft.com/clr/nsassem/Microsoft.FSharp.Collections.FSharpList`1[[Program+Condomino%2C%20scale%2C%20Version%3D1.0.0/FSharp.Core%2C%20Version%3D4.7.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Db03f5f7f11d50a3a">
+      <head href="#ref-22" />
+      <tail href="#ref-23" />
+    </a3:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_null_x005D__x005D_>
+    <a1:Program_x002B_Operazione_x002B_VersamentoQuote id="ref-19" xmlns:a1="http://schemas.microsoft.com/clr/assem/scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull">
+      <item1 href="#ref-7" />
+      <item2>74</item2>
+      <_tag>0</_tag>
+      <Operazione_x002B__tag>0</Operazione_x002B__tag>
+    </a1:Program_x002B_Operazione_x002B_VersamentoQuote>
+    <a5:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_null_x005D__x005D_ id="ref-20" xmlns:a5="http://schemas.microsoft.com/clr/nsassem/System.Tuple`2[[Program+Data%2C%20scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull]%2C[Program+Operazione%2C%20scale%2C%20Version%3D1.0.0/System.Private.CoreLib%2C%20Version%3D4.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3D7cec85d7bea7798e">
+      <m_Item1 href="#ref-2" />
+      <m_Item2 href="#ref-24" />
+    </a5:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_null_x005D__x005D_>
+    <a4:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_7cec85d7bea7798e_x005D__x005D_ id="ref-21" xmlns:a4="http://schemas.microsoft.com/clr/nsassem/Microsoft.FSharp.Collections.FSharpList`1[[System.Tuple`2[[Program+Data%2C%20scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull]%2C[Program+Operazione%2C%20scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull]]%2C%20System.Private.CoreLib%2C%20Version%3D4.0.0/FSharp.Core%2C%20Version%3D4.7.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Db03f5f7f11d50a3a">
+      <head href="#ref-25" />
+      <tail href="#ref-26" />
+    </a4:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_7cec85d7bea7798e_x005D__x005D_>
+    <a1:Program_x002B_Condomino id="ref-22" xmlns:a1="http://schemas.microsoft.com/clr/assem/scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull">
+      <_tag>3</_tag>
+    </a1:Program_x002B_Condomino>
+    <a3:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_null_x005D__x005D_ id="ref-23" xmlns:a3="http://schemas.microsoft.com/clr/nsassem/Microsoft.FSharp.Collections.FSharpList`1[[Program+Condomino%2C%20scale%2C%20Version%3D1.0.0/FSharp.Core%2C%20Version%3D4.7.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Db03f5f7f11d50a3a">
+      <head xsi:null="1" />
+      <tail xsi:null="1" />
+    </a3:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_null_x005D__x005D_>
+    <a1:Program_x002B_Operazione_x002B_VersamentoQuote id="ref-24" xmlns:a1="http://schemas.microsoft.com/clr/assem/scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull">
+      <item1 href="#ref-11" />
+      <item2>78</item2>
+      <_tag>0</_tag>
+      <Operazione_x002B__tag>0</Operazione_x002B__tag>
+    </a1:Program_x002B_Operazione_x002B_VersamentoQuote>
+    <a5:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_null_x005D__x005D_ id="ref-25" xmlns:a5="http://schemas.microsoft.com/clr/nsassem/System.Tuple`2[[Program+Data%2C%20scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull]%2C[Program+Operazione%2C%20scale%2C%20Version%3D1.0.0/System.Private.CoreLib%2C%20Version%3D4.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3D7cec85d7bea7798e">
+      <m_Item1 href="#ref-2" />
+      <m_Item2 href="#ref-27" />
+    </a5:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_null_x005D__x005D_>
+    <a4:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_7cec85d7bea7798e_x005D__x005D_ id="ref-26" xmlns:a4="http://schemas.microsoft.com/clr/nsassem/Microsoft.FSharp.Collections.FSharpList`1[[System.Tuple`2[[Program+Data%2C%20scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull]%2C[Program+Operazione%2C%20scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull]]%2C%20System.Private.CoreLib%2C%20Version%3D4.0.0/FSharp.Core%2C%20Version%3D4.7.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Db03f5f7f11d50a3a">
+      <head href="#ref-28" />
+      <tail href="#ref-29" />
+    </a4:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_7cec85d7bea7798e_x005D__x005D_>
+    <a1:Program_x002B_Operazione_x002B_VersamentoQuote id="ref-27" xmlns:a1="http://schemas.microsoft.com/clr/assem/scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull">
+      <item1 href="#ref-16" />
+      <item2>48</item2>
+      <_tag>0</_tag>
+      <Operazione_x002B__tag>0</Operazione_x002B__tag>
+    </a1:Program_x002B_Operazione_x002B_VersamentoQuote>
+    <a5:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_null_x005D__x005D_ id="ref-28" xmlns:a5="http://schemas.microsoft.com/clr/nsassem/System.Tuple`2[[Program+Data%2C%20scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull]%2C[Program+Operazione%2C%20scale%2C%20Version%3D1.0.0/System.Private.CoreLib%2C%20Version%3D4.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3D7cec85d7bea7798e">
+      <m_Item1 href="#ref-30" />
+      <m_Item2 href="#ref-31" />
+    </a5:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_null_x005D__x005D_>
+    <a4:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_7cec85d7bea7798e_x005D__x005D_ id="ref-29" xmlns:a4="http://schemas.microsoft.com/clr/nsassem/Microsoft.FSharp.Collections.FSharpList`1[[System.Tuple`2[[Program+Data%2C%20scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull]%2C[Program+Operazione%2C%20scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull]]%2C%20System.Private.CoreLib%2C%20Version%3D4.0.0/FSharp.Core%2C%20Version%3D4.7.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Db03f5f7f11d50a3a">
+      <head href="#ref-32" />
+      <tail href="#ref-33" />
+    </a4:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_7cec85d7bea7798e_x005D__x005D_>
+    <a1:Program_x002B_Data id="ref-30" xmlns:a1="http://schemas.microsoft.com/clr/assem/scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull">
+      <item1>2019</item1>
+      <item2>7</item2>
+      <item3>22</item3>
+    </a1:Program_x002B_Data>
+    <a1:Program_x002B_Operazione_x002B_Prestito id="ref-31" xmlns:a1="http://schemas.microsoft.com/clr/assem/scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull">
+      <item>500</item>
+      <_tag>4</_tag>
+      <Operazione_x002B__tag>4</Operazione_x002B__tag>
+    </a1:Program_x002B_Operazione_x002B_Prestito>
+    <a5:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_null_x005D__x005D_ id="ref-32" xmlns:a5="http://schemas.microsoft.com/clr/nsassem/System.Tuple`2[[Program+Data%2C%20scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull]%2C[Program+Operazione%2C%20scale%2C%20Version%3D1.0.0/System.Private.CoreLib%2C%20Version%3D4.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3D7cec85d7bea7798e">
+      <m_Item1 href="#ref-34" />
+      <m_Item2 href="#ref-35" />
+    </a5:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_null_x005D__x005D_>
+    <a4:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_7cec85d7bea7798e_x005D__x005D_ id="ref-33" xmlns:a4="http://schemas.microsoft.com/clr/nsassem/Microsoft.FSharp.Collections.FSharpList`1[[System.Tuple`2[[Program+Data%2C%20scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull]%2C[Program+Operazione%2C%20scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull]]%2C%20System.Private.CoreLib%2C%20Version%3D4.0.0/FSharp.Core%2C%20Version%3D4.7.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Db03f5f7f11d50a3a">
+      <head xsi:null="1" />
+      <tail xsi:null="1" />
+    </a4:_x0030__x002C__x0020_Culture_x003D_neutral_x002C__x0020_PublicKeyToken_x003D_7cec85d7bea7798e_x005D__x005D_>
+    <a1:Program_x002B_Data id="ref-34" xmlns:a1="http://schemas.microsoft.com/clr/assem/scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull">
+      <item1>2019</item1>
+      <item2>7</item2>
+      <item3>11</item3>
+    </a1:Program_x002B_Data>
+    <a1:Program_x002B_Operazione id="ref-35" xmlns:a1="http://schemas.microsoft.com/clr/assem/scale%2C%20Version%3D1.0.0.0%2C%20Culture%3Dneutral%2C%20PublicKeyToken%3Dnull">
+      <_tag>1</_tag>
+    </a1:Program_x002B_Operazione>
+  </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
