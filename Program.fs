@@ -1,42 +1,8 @@
 ﻿// Learn more about F# at http://fsharp.org
-
 open System
-open System.IO
 open Terminal.Gui
 open NStack
-open System.Runtime.Serialization.Formatters.Soap
-
-[<Serializable>]
-type Condomino = Michela | Gerardo | Elena | Giulia
-
-[<Serializable>]
-type Operazione = 
-    | VersamentoQuote of Condomino * int
-    | PagamentoScale
-    | AltraSpesa of string * int
-    | AltroVersamento of string * int
-    | Prestito of int
-    | Restituzione of int
-
-[<Serializable>]
-type Data = Data of int * int  * int
-
-[<Serializable>]
-type Movimento = (Data * Operazione)
-
-[<Serializable>]
-type Param = { costo_scale: int; num_pulizie_mese: int; quota_mensile: int }
-
-[<Serializable>]
-type Attuale = (Data * Param)
-
-[<Serializable>]
-type Scale = {
-    tempo_zero: Data;
-    attuale: Attuale;
-    condomini: Condomino list;
-    movimenti: Movimento list    
-}
+open Scale
 
 
 let ustr (x:string) = ustring.Make(x)
@@ -62,25 +28,6 @@ let buildMenu() =
 
 [<EntryPoint>]
 let main argv =
-    let sfOperazione : SoapFormatter = new SoapFormatter()
-
-    let fsOperazione = new FileStream((* @"D:\Users\Francesco\Documents\F#\scale\" *)  @"operazione.scl", FileMode.Create)
-
-    let t_0 = Data (2019,7,1)
-    let s : Scale = {
-        tempo_zero = t_0;
-        attuale = (t_0, { costo_scale = 20; num_pulizie_mese=2; quota_mensile=12 });
-        condomini = [Michela; Gerardo; Elena; Giulia];
-        movimenti = [
-          (t_0, (AltroVersamento ("Appianamento", 333)));
-          (t_0, VersamentoQuote (Michela, 74));
-          (t_0, VersamentoQuote (Gerardo, 78));
-          (t_0, VersamentoQuote (Elena, 48));
-          (Data (2019, 7, 22), Prestito 500);
-          (Data (2019, 7, 11), PagamentoScale)
-        ]
-      }
-    sfOperazione.Serialize(fsOperazione, s)
 
     Application.Init ()
     let top = Application.Top
@@ -88,4 +35,8 @@ let main argv =
     top.Add (buildMenu())
     top.Add (win)
     Application.Run ()
+    let s = createStato @"stato.xml"
+    printfn "%A" s
+    printfn "%d\n" (cassa s)
+    printfn "%d" (tesoretto s)
     0 // return an integer exit code
