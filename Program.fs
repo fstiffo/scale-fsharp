@@ -64,7 +64,7 @@ let buildMenu() =
 let main argv =
     let sfOperazione : SoapFormatter = new SoapFormatter()
 
-    let fsOperazione = new FileStream(@"D:\Users\Francesco\Documents\F#\scale\operazione.scl", FileMode.Create)
+    let fsOperazione = new FileStream((* @"D:\Users\Francesco\Documents\F#\scale\" *)  @"operazione.scl", FileMode.Create)
 
     let t_0 = Data (2019,7,1)
     let s : Scale = {
