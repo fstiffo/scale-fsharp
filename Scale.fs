@@ -26,14 +26,14 @@ type Data = Data of int * int  * int
 type Movimento = (Data * Operazione)
 
 [<Serializable>]
-type Param = { costo_scale: int; num_pulizie_mese: int; quota_mensile: int }
+type Param = { costoScale: int; numPulizieMese: int; quotaMensile: int }
 
 [<Serializable>]
 type Attuale = (Data * Param)
 
 [<Serializable>]
 type Stato = {
-    tempo_zero: Data;
+    tempoZero: Data;
     attuale: Attuale;
     condomini: Condomino list;
     movimenti: Movimento list    
@@ -47,8 +47,8 @@ let createStato fileName : Stato =
     else
         let t_0 = Data (2019,7,1)
         let s : Stato = {
-               tempo_zero = t_0;
-               attuale = (t_0, { costo_scale = 20; num_pulizie_mese=2; quota_mensile=12 });
+               tempoZero = t_0;
+               attuale = (t_0, { costoScale = 20; numPulizieMese=2; quotaMensile=12 });
                condomini = [Michela; Gerardo; Elena; Giulia];
                movimenti = [
                  (t_0, (AltroVersamento ("Appianamento", 333)));
@@ -66,12 +66,12 @@ let createStato fileName : Stato =
 
 let contabile (s: Stato) (op: Operazione) : int = 
     match op with
-     | VersamentoQuote (_, i) -> i
-     | PagamentoScale -> -(snd s.attuale).costo_scale
-     | AltraSpesa (_, i) -> - i
-     | AltroVersamento (_, i) -> i
-     | Prestito i -> - i
-     | Restituzione i -> i
+    | VersamentoQuote (_, i) -> i
+    | PagamentoScale -> -(snd s.attuale).costoScale
+    | AltraSpesa (_, i) -> - i
+    | AltroVersamento (_, i) -> i
+    | Prestito i -> - i
+    | Restituzione i -> i
 
 let cassa (s: Stato) : int =
     let ms = s.movimenti in
@@ -89,8 +89,8 @@ let dataToDateTime(Data (y,m,d)) =
 let tesoretto (s: Stato)  : int =
     let ms = s.movimenti
     let altro = ms |> List.map (fun ((_, op) : Movimento) -> altroContabile s op) |> List.sum
-    let pagamenti = ms |> List.map (fun ((_, op) : Movimento) -> match op with | PagamentoScale -> (snd s.attuale).costo_scale | _ -> 0) |> List.sum
-    let mesi = (new DateDiff(dataToDateTime s.tempo_zero, DateTime.Today)).Months
+    let pagamenti = ms |> List.map (fun ((_, op) : Movimento) -> match op with | PagamentoScale -> (snd s.attuale).costoScale | _ -> 0) |> List.sum
+    let mesi = (new DateDiff(dataToDateTime s.tempoZero, DateTime.Today)).Months
     let num_condomini = List.length s.condomini
-    mesi * num_condomini * (snd s.attuale).quota_mensile + altro - pagamenti
+    mesi * num_condomini * (snd s.attuale).quotaMensile + altro - pagamenti
     

@@ -37,6 +37,6 @@ let main argv =
     Application.Run ()
     let s = createStato @"stato.xml"
     printfn "%A" s
-    printfn "%d\n" (cassa s)
+    printfn "%d" (cassa s)
     printfn "%d" (tesoretto s)
     0 // return an integer exit code
