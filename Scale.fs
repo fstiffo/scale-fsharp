@@ -74,8 +74,7 @@ let private contabile (s: Stato) (op: Operazione) : int =
     | Restituzione i -> i
 
 let cassa (s: Stato) : int =
-    let ms = s.movimenti in
-    ms |> List.map (fun ((_, op) : Movimento) -> contabile s op) |> List.sum
+    s.movimenti |> List.map (fun ((_, op) : Movimento) -> contabile s op) |> List.sum
 
 let private altroContabile (s: Stato) (op: Operazione) : int =
     match op with
@@ -92,10 +91,28 @@ let dataToDateTime(Data (y,m,d)) =
     new DateTime(y,m,d)
 
 let tesoretto (s: Stato)  : int =
-    let ms = s.movimenti
-    let altro = ms |> List.map (fun ((_, op) : Movimento) -> altroContabile s op) |> List.sum
-    let pagamenti = ms |> List.map (fun ((_, op) : Movimento) -> pagamentoScale s op) |> List.sum
+    let altro = s.movimenti |> List.map (fun ((_, op) : Movimento) -> altroContabile s op) |> List.sum
+    let pagamenti = s.movimenti |> List.map (fun ((_, op) : Movimento) -> pagamentoScale s op) |> List.sum
     let mesi = (new DateDiff(dataToDateTime s.tempoZero, DateTime.Today)).Months
     let num_condomini = List.length s.condomini
     mesi * num_condomini * (snd s.attuale).quotaMensile + altro - pagamenti
-    
+
+let private versamentoQuote (s: Stato) (op: Operazione) (con: Condomino) : int =
+    match op with
+    | VersamentoQuote (c, i) when c = con -> i
+    | _ -> 0
+ 
+let quote (s: Stato) (c: Condomino) : int =
+    let versamentiQuote =  s.movimenti |> List.map  (fun ((_, op) : Movimento) -> versamentoQuote s op c) |> List.sum
+    let quoteVersate = versamentiQuote / (snd s.attuale).quotaMensile
+    let mesi = (new DateDiff(dataToDateTime s.tempoZero, DateTime.Today)).Months
+    quoteVersate - mesi
+
+let prestitiContabile (s: Stato) (op: Operazione) : int =
+    match op with
+    | Prestito i -> -i
+    | Restituzione i -> i
+    | _ -> 0
+
+let prestito (s: Stato) : int =
+     s.movimenti |> List.map  (fun ((_, op) : Movimento) -> prestitiContabile s op) |> List.sum |> ( ~- )
