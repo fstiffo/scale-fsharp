@@ -21,7 +21,7 @@ let quit() =
 
 let buildMenu() =
     MenuBar ([|
-        MenuBarItem (ustr ("File"), 
+        MenuBarItem (ustr ("_File"), 
             [| MenuItem(ustr("_New"), "Creates a new file", System.Action newFile);
                MenuItem(ustr("_Quit"), null, System.Action quit)
              |])|])
@@ -30,6 +30,8 @@ let buildMenu() =
 let main argv =
 
     Application.Init ()
+    Colors.Base.Focus <- Attribute.Make(Color.BrightGreen, Color.Brown)
+
     let top = Application.Top
     let win = Window (ustr "Hello", X=Pos.op_Implicit(0), Y=Pos.op_Implicit(1), Width=Dim.Fill(), Height=Dim.Fill())
     top.Add (buildMenu())
