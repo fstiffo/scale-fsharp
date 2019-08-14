@@ -21,11 +21,27 @@ type Operazione =
     | Prestito of int
     | Restituzione of int
 
+let OperazioneToString op =
+    match op with
+    | VersamentoQuote(c, i) ->
+        "Versamento quote (" + c.ToString() + "): ?" + i.ToString()
+    | PagamentoScale -> "Pagamento scale"
+    | AltraSpesa(s, i) -> "Altra spesa (" + s + "): ?" + i.ToString()
+    | AltroVersamento(s, i) -> "Altro versamento (" + s + "): ?" + i.ToString()
+    | Prestito i -> "Prestito: ?" + i.ToString()
+    | Restituzione i -> "Restituzione ?" + i.ToString()
+
 [<Serializable>]
 type Data = Data of int * int * int
 
+let dataToDateTime (Data(y, m, d)) = new DateTime(y, m, d)
+let DataToString(d) = (dataToDateTime d).ToString("dd-MM-yy")
+
 [<Serializable>]
 type Movimento = Data * Operazione
+
+let MovimentoToString((d, op) : Movimento) =
+    DataToString(d) + " | " + OperazioneToString(op)
 
 [<Serializable>]
 type Param =
@@ -98,8 +114,6 @@ let private pagamentoScale (s : Stato) ((_, op) : Movimento) : int =
     match op with
     | PagamentoScale -> (snd s.attuale).costoScale
     | _ -> 0
-
-let dataToDateTime (Data(y, m, d)) = new DateTime(y, m, d)
 
 let tesoretto (s : Stato) : int =
     let altro =

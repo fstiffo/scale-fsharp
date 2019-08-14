@@ -1,8 +1,10 @@
 ﻿module UI
 
 open System
+open System.Collections
 open Terminal.Gui
 open NStack
+open Scale
 
 let ustr (x : string) = ustring.Make(x)
 let stop = Action Application.RequestStop
@@ -27,14 +29,26 @@ let buildMenu() =
                          System.Action newFile)
                     MenuItem(ustr ("_Quit"), null, System.Action quit) |]) |])
 
-let startApp =
+let buildMovimentiList (s : Stato) =
+    let ms = s.movimenti
+    ()
+
+let buildScrollView (s : Stato) =
+    let l = (s.movimenti |> List.map MovimentoToString) |> List.toArray :> IList
+    let listView = new ListView(Rect(0, 0, 43, 8), l)
+    let frame = FrameView(Rect(60, 2, 45, 10), ustr "Movimenti")
+    frame.Add(listView)
+    frame :> View
+
+let startApp (s : Stato) =
     Application.Init()
-    Colors.Base.Focus <- Attribute.Make(Color.BrightGreen, Color.Brown)
+    // Colors.Base.Focus <- Attribute.Make(Color.BrightGreen, Color.Brown)
     let top = Application.Top
     let win =
         Window
             (ustr "Hello", X = Pos.op_Implicit (0), Y = Pos.op_Implicit (1),
              Width = Dim.Fill(), Height = Dim.Fill())
+    win.Add(buildScrollView (s))
     top.Add(buildMenu())
     top.Add(win)
     Application.Run()
