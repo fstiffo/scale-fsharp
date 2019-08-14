@@ -1,10 +1,8 @@
-﻿// Learn more about F# at http://fsharp.org
+﻿module UI
+
 open System
 open Terminal.Gui
 open NStack
-open Scale
-open UI
-
 
 let ustr (x:string) = ustring.Make(x)
 
@@ -27,14 +25,12 @@ let buildMenu() =
                MenuItem(ustr("_Quit"), null, System.Action quit)
              |])|])
 
-[<EntryPoint>]
-let main argv =
+let startApp =
+    Application.Init ()
+    Colors.Base.Focus <- Attribute.Make(Color.BrightGreen, Color.Brown)
 
-    startApp
-    let s = createStato @"stato.xml"
-    printfn "%A" s
-    printfn "%d" (cassa s)
-    printfn "%d" (tesoretto s)
-    printfn "%d %d %d %d" (quote s Michela) (quote s Gerardo) (quote s Elena) (quote s Giulia)
-    printfn "%d" (prestito s)
-    0 // return an integer exit code
+    let top = Application.Top
+    let win = Window (ustr "Hello", X=Pos.op_Implicit(0), Y=Pos.op_Implicit(1), Width=Dim.Fill(), Height=Dim.Fill())
+    top.Add (buildMenu())
+    top.Add (win)
+    Application.Run ()
