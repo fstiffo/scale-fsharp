@@ -34,9 +34,10 @@ let buildMovimentiList (s : Stato) =
     ()
 
 let buildScrollView (s : Stato) =
-    let l = (s.movimenti |> List.map MovimentoToString) |> List.toArray :> IList
-    let listView = new ListView(Rect(0, 0, 43, 8), l)
-    let frame = FrameView(Rect(60, 2, 45, 10), ustr "Movimenti")
+    let l =
+        (s.movimenti |> List.map (MovimentoToString s)) |> List.toArray :> IList
+    let listView = new ListView(Rect(0, 0, 53, 18), l)
+    let frame = FrameView(Rect(60, 0, 55, 20), ustr "Movimenti")
     frame.Add(listView)
     frame :> View
 
@@ -46,8 +47,8 @@ let startApp (s : Stato) =
     let top = Application.Top
     let win =
         Window
-            (ustr "Hello", X = Pos.op_Implicit (0), Y = Pos.op_Implicit (1),
-             Width = Dim.Fill(), Height = Dim.Fill())
+            (ustr "SCALE - v. 0.1", X = Pos.op_Implicit (0),
+             Y = Pos.op_Implicit (1), Width = Dim.Fill(), Height = Dim.Fill())
     win.Add(buildScrollView (s))
     top.Add(buildMenu())
     top.Add(win)

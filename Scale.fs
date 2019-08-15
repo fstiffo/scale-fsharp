@@ -21,16 +21,6 @@ type Operazione =
     | Prestito of int
     | Restituzione of int
 
-let OperazioneToString op =
-    match op with
-    | VersamentoQuote(c, i) ->
-        "Versamento quote (" + c.ToString() + "): ?" + i.ToString()
-    | PagamentoScale -> "Pagamento scale"
-    | AltraSpesa(s, i) -> "Altra spesa (" + s + "): ?" + i.ToString()
-    | AltroVersamento(s, i) -> "Altro versamento (" + s + "): ?" + i.ToString()
-    | Prestito i -> "Prestito: ?" + i.ToString()
-    | Restituzione i -> "Restituzione ?" + i.ToString()
-
 [<Serializable>]
 type Data = Data of int * int * int
 
@@ -39,9 +29,6 @@ let DataToString(d) = (dataToDateTime d).ToString("dd-MM-yy")
 
 [<Serializable>]
 type Movimento = Data * Operazione
-
-let MovimentoToString((d, op) : Movimento) =
-    DataToString(d) + " | " + OperazioneToString(op)
 
 [<Serializable>]
 type Param =
@@ -58,6 +45,22 @@ type Stato =
       attuale : Attuale
       condomini : Condomino list
       movimenti : Movimento list }
+
+let OperazioneToString (s : Stato) op =
+    match op with
+    | VersamentoQuote(c, i) ->
+        (sprintf "% 4iEU | " i) + "Versamento quote (" + c.ToString() + ")"
+    | PagamentoScale ->
+        (sprintf "% 4iEU | " -(snd s.attuale).costoScale) + "Pagamento scale"
+    | AltraSpesa(str, i) ->
+        (sprintf "% 4iEU | " -i) + "Altra spesa (" + str + ")"
+    | AltroVersamento(str, i) ->
+        (sprintf "% 4iEU | " i) + "Altro versamento (" + str + ")"
+    | Prestito i -> (sprintf "% 4iEU | " -i) + "Prestito"
+    | Restituzione i -> (sprintf "% 4iEU | " i) + "Restituzione"
+
+let MovimentoToString s ((d, op) : Movimento) =
+    DataToString(d) + " | " + (OperazioneToString s op)
 
 let createStato fileName : Stato =
     if (File.Exists(fileName)) then
