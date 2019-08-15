@@ -35,8 +35,13 @@ let buildMovimentiList (s : Stato) =
 
 let buildScrollView (s : Stato) =
     let l =
-        (s.movimenti |> List.map (MovimentoToString s)) |> List.toArray :> IList
+        (s.movimenti |> List.map (MovimentoToString s))
+        |> List.map ustr
+        |> List.toArray :> IList
+
     let listView = new ListView(Rect(0, 0, 53, 18), l)
+    listView.TopItem <- if (l.Count - 19) > 0 then l.Count - 19
+                        else 1
     let frame = FrameView(Rect(60, 0, 55, 20), ustr "Movimenti")
     frame.Add(listView)
     frame :> View

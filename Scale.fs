@@ -24,9 +24,6 @@ type Operazione =
 [<Serializable>]
 type Data = Data of int * int * int
 
-let dataToDateTime (Data(y, m, d)) = new DateTime(y, m, d)
-let DataToString(d) = (dataToDateTime d).ToString("dd-MM-yy")
-
 [<Serializable>]
 type Movimento = Data * Operazione
 
@@ -45,22 +42,6 @@ type Stato =
       attuale : Attuale
       condomini : Condomino list
       movimenti : Movimento list }
-
-let OperazioneToString (s : Stato) op =
-    match op with
-    | VersamentoQuote(c, i) ->
-        (sprintf "% 4iEU | " i) + "Versamento quote (" + c.ToString() + ")"
-    | PagamentoScale ->
-        (sprintf "% 4iEU | " -(snd s.attuale).costoScale) + "Pagamento scale"
-    | AltraSpesa(str, i) ->
-        (sprintf "% 4iEU | " -i) + "Altra spesa (" + str + ")"
-    | AltroVersamento(str, i) ->
-        (sprintf "% 4iEU | " i) + "Altro versamento (" + str + ")"
-    | Prestito i -> (sprintf "% 4iEU | " -i) + "Prestito"
-    | Restituzione i -> (sprintf "% 4iEU | " i) + "Restituzione"
-
-let MovimentoToString s ((d, op) : Movimento) =
-    DataToString(d) + " | " + (OperazioneToString s op)
 
 let createStato fileName : Stato =
     if (File.Exists(fileName)) then
@@ -118,6 +99,8 @@ let private pagamentoScale (s : Stato) ((_, op) : Movimento) : int =
     | PagamentoScale -> (snd s.attuale).costoScale
     | _ -> 0
 
+let dataToDateTime (Data(y, m, d)) = new DateTime(y, m, d)
+
 let tesoretto (s : Stato) : int =
     let altro =
         s.movimenti
@@ -159,3 +142,23 @@ let prestito (s : Stato) : int =
     |> List.map (prestitiContabile s)
     |> List.sum
     |> (~-)
+
+(* Printable representations *)
+
+let DataToString(d) = (dataToDateTime d).ToString("dd-MM-yy")
+
+let OperazioneToString (s : Stato) op =
+    match op with
+    | VersamentoQuote(c, i) ->
+        (sprintf "% 4iEU | " i) + "Versamento quote (" + c.ToString() + ")"
+    | PagamentoScale ->
+        (sprintf "% 4iEU | " -(snd s.attuale).costoScale) + "Pagamento scale"
+    | AltraSpesa(str, i) ->
+        (sprintf "% 4iEU | " -i) + "Altra spesa (" + str + ")"
+    | AltroVersamento(str, i) ->
+        (sprintf "% 4iEU | " i) + "Altro versamento (" + str + ")"
+    | Prestito i -> (sprintf "% 4iEU | " -i) + "Prestito"
+    | Restituzione i -> (sprintf "% 4iEU | " i) + "Restituzione"
+
+let MovimentoToString s ((d, op) : Movimento) =
+    DataToString(d) + " | " + (OperazioneToString s op)
