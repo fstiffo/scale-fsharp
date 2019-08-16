@@ -43,6 +43,16 @@ type Stato =
       condomini : Condomino list
       movimenti : Movimento list }
 
+let mutable stato =
+    { tempoZero = Data(0, 0, 0)
+      attuale =
+          (Data(0, 0, 0),
+           { costoScale = 0
+             numPulizieMese = 0
+             quotaMensile = 0 })
+      condomini = []
+      movimenti = [] }
+
 let createStato fileName : Stato =
     if (File.Exists(fileName)) then
         let sfStato = new SoapFormatter()
@@ -73,6 +83,9 @@ let createStato fileName : Stato =
         let fsStato = new FileStream(fileName, FileMode.Create)
         sfStato.Serialize(fsStato, s)
         s
+
+let addMovimento (s : Stato) (m : Movimento) : Stato = s
+let deleteMovimento (s : Stato) (m : Movimento) : Stato = s
 
 let private contabile (s : Stato) ((_, op) : Movimento) : int =
     match op with

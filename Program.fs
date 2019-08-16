@@ -4,8 +4,9 @@ open UI
 
 [<EntryPoint>]
 let main argv =
-    let s = createStato @"stato.xml"
-    startApp s
+    let mutable s = createStato @"stato.xml"
+    Scale.stato <- s
+    startApp
     printfn "%A" s
     printfn "%d" (cassa s)
     printfn "%d" (tesoretto s)

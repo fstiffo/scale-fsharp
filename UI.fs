@@ -29,24 +29,34 @@ let buildMenu() =
                          System.Action newFile)
                     MenuItem(ustr ("_Quit"), null, System.Action quit) |]) |])
 
-let buildMovimentiList (s : Stato) =
-    let ms = s.movimenti
-    ()
+let movimentiProcessKey (lw : ListView) (kb : KeyEvent) =
+    match (char kb.KeyValue) with
+    | 'd' ->
+        quit()
+        true
+    | _ -> lw.SuperView.ProcessHotKey(kb)
 
-let buildScrollView (s : Stato) =
+let buildMovimentiView =
+    let s = Scale.stato
+
     let l =
-        (s.movimenti |> List.map (MovimentoToString s))
-        |> List.map ustr
+        s.movimenti
+        |> List.map ((MovimentoToString s) >> ustr)
+        //|> List.map ustr
         |> List.toArray :> IList
 
-    let listView = new ListView(Rect(0, 0, 53, 18), l)
+    let listView =
+        { new ListView(Rect(0, 0, 53, 18), l) with
+              member x.ProcessColdKey(keyEvent : KeyEvent) =
+                  (movimentiProcessKey x keyEvent) }
+
     listView.TopItem <- if (l.Count - 19) > 0 then l.Count - 19
                         else 1
     let frame = FrameView(Rect(60, 0, 55, 20), ustr "Movimenti")
     frame.Add(listView)
     frame :> View
 
-let startApp (s : Stato) =
+let startApp =
     Application.Init()
     // Colors.Base.Focus <- Attribute.Make(Color.BrightGreen, Color.Brown)
     let top = Application.Top
@@ -54,7 +64,7 @@ let startApp (s : Stato) =
         Window
             (ustr "SCALE - v. 0.1", X = Pos.op_Implicit (0),
              Y = Pos.op_Implicit (1), Width = Dim.Fill(), Height = Dim.Fill())
-    win.Add(buildScrollView (s))
+    win.Add(buildMovimentiView)
     top.Add(buildMenu())
     top.Add(win)
     Application.Run()
