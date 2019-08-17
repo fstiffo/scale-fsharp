@@ -4,13 +4,13 @@ open UI
 
 [<EntryPoint>]
 let main argv =
-    let mutable s = createStato @"stato.xml"
-    Scale.stato <- s
-    startApp
-    printfn "%A" s
-    printfn "%d" (cassa s)
-    printfn "%d" (tesoretto s)
-    printfn "%d %d %d %d" (quote s Michela) (quote s Gerardo) (quote s Elena)
-        (quote s Giulia)
-    printfn "%d" (prestito s)
+    createStato()
+    startApp()
+    printfn "%A" Scale.stato
+    printfn "%d" (cassa Scale.stato)
+    printfn "%d" (tesoretto Scale.stato)
+    printfn "%d %d %d %d" (quote Scale.stato Michela)
+        (quote Scale.stato Gerardo) (quote Scale.stato Elena)
+        (quote Scale.stato Giulia)
+    printfn "%d" (prestito Scale.stato)
     0 // return an integer exit code

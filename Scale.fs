@@ -5,6 +5,8 @@ open System.IO
 open System.Runtime.Serialization.Formatters.Soap
 open Itenso.TimePeriod
 
+let fileName = @"stato_scale.xml"
+
 [<Serializable>]
 type Condomino =
     | Michela
@@ -53,11 +55,13 @@ let mutable stato =
       condomini = []
       movimenti = [] }
 
-let createStato fileName : Stato =
+let createStato() =
     if (File.Exists(fileName)) then
         let sfStato = new SoapFormatter()
         let fsStato = new FileStream(fileName, FileMode.Open)
-        sfStato.Deserialize(fsStato) :?> Stato
+        let s = sfStato.Deserialize(fsStato) :?> Stato
+        stato <- s
+        ()
     else
         let t_0 = Data(2019, 7, 1)
 
@@ -80,12 +84,28 @@ let createStato fileName : Stato =
                     (Data(2019, 8, 14), PagamentoScale) ] }
 
         let sfStato = new SoapFormatter()
-        let fsStato = new FileStream(fileName, FileMode.Create)
+        use fsStato = new FileStream(fileName, FileMode.Create)
         sfStato.Serialize(fsStato, s)
-        s
+        stato <- s
+        ()
 
-let addMovimento (s : Stato) (m : Movimento) : Stato = s
-let deleteMovimento (s : Stato) (m : Movimento) : Stato = s
+let updateStato s =
+    let sfStato = new SoapFormatter()
+    use fsbStato = new FileStream(fileName + ".bak", FileMode.Create)
+    sfStato.Serialize(fsbStato, stato)
+    use fsStato = new FileStream(fileName, FileMode.Create)
+    sfStato.Serialize(fsStato, s)
+    stato <- s
+
+let addMovimento (s : Stato) (i : int) : Stato = s
+
+let deleteMovimento (s : Stato) (i : int) : Stato =
+    let deleteAt index list =
+        let first, second = List.splitAt index list
+        first @ second.Tail
+    { s with movimenti = deleteAt i s.movimenti }
+
+let modifyMovimento (s : Stato) (i : int) (m : Movimento) = s
 
 let private contabile (s : Stato) ((_, op) : Movimento) : int =
     match op with
