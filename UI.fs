@@ -30,19 +30,42 @@ let buildMenu() =
                     MenuItem(ustr ("_Quit"), null, System.Action quit) |]) |])
 
 let newMovimento() : Option<Movimento> =
-    let importo = TextField(ustr "0")
+    let today = DateTime.Today
+    let y, m, d = today.Year, today.Month, today.Day
+    let dataLbl = Label(1, 1, ustr "Data:")
+    let yearTxtFld = TextField(7, 1, 5, ustr (string y))
+    let stroke1Lbl = Label(12, 1, ustr "/")
+    let monthTxtFld = TextField(13, 1, 3, ustr (string m))
+    let stroke2Lbl = Label(16, 1, ustr "/")
+    let dayTxtFld = TextField(17, 1, 3, ustr (string d))
+    let movimentoRdoGrp =
+        RadioGroup
+            (1, 3,
+             [| "_1 Pagamento scale"; "_2 Versamento quote"; "_3 Prestito";
+                "_4 Restituzione"; "_5 Altro versamento"; "_6 Altra spesa" |])
+    let condominoLbl = Label(26, 3, ustr "Condomino:")
+    let condominoRdoGrp =
+        RadioGroup(26, 5, [| "_Michela"; "_Gerardo"; "_Elena"; "_Silvia" |])
+    let importoLbl = Label(1, 10, ustr "Importo:")
+    let importoTxtFld = TextField(10, 10, 6, ustr "0")
+    let causaleLbl = Label(1, 12, ustr "Causale:")
+    let causaleTxtFld = TextField(10, 12, 24, ustr "")
 
     let addMovimento() =
         let m =
             Prestito(try
-                         int (importo.Text.ToString())
+                         int (importoTxtFld.Text.ToString())
                      with _ -> 0)
         ignore <| MessageBox.ErrorQuery(10, 10, "Debug", string m, "Ok")
 
     // Application.RequestStop()
     let ok = Button(ustr "Ok", true, Clicked = Action addMovimento)
-    let d = Dialog(ustr "Aggiungi movimento", 50, 20, ok)
-    d.Add(importo)
+    let annulla = Button(ustr "Annulla", false, Clicked = stop)
+    let d = Dialog(ustr "Aggiungi movimento", 50, 20, ok, annulla)
+    d.Add
+        (dataLbl, yearTxtFld, stroke1Lbl, monthTxtFld, stroke2Lbl, dayTxtFld,
+         movimentoRdoGrp, condominoLbl, condominoRdoGrp, importoLbl,
+         importoTxtFld, causaleLbl, causaleTxtFld)
     Application.Run(d)
     None
 
