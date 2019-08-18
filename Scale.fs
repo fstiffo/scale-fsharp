@@ -97,13 +97,20 @@ let updateStato s =
     sfStato.Serialize(fsStato, s)
     stato <- s
 
-let addMovimento (s : Stato) (i : int) : Stato = s
+let addMovimento (s : Stato) (m : Movimento) : Stato =
+    { s with movimenti = s.movimenti @ [ m ] }
 
 let deleteMovimento (s : Stato) (i : int) : Stato =
-    let deleteAt index list =
-        let first, second = List.splitAt index list
+    let deleted =
+        let first, second = List.splitAt i s.movimenti
         first @ second.Tail
-    { s with movimenti = deleteAt i s.movimenti }
+    { s with movimenti = deleted }
+
+let replaceMovimento (s : Stato) (i : int) (m : Movimento) : Stato =
+    let replaced =
+        let first, second = List.splitAt i s.movimenti
+        first @ m :: second.Tail
+    { s with movimenti = replaced }
 
 let modifyMovimento (s : Stato) (i : int) (m : Movimento) = s
 
@@ -133,6 +140,7 @@ let private pagamentoScale (s : Stato) ((_, op) : Movimento) : int =
     | _ -> 0
 
 let dataToDateTime (Data(y, m, d)) = new DateTime(y, m, d)
+let dateTimeToData (d : DateTime) = Data(d.Year, d.Month, d.Day)
 
 let tesoretto (s : Stato) : int =
     let altro =

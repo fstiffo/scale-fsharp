@@ -2,6 +2,7 @@
 
 open System
 open System.Collections
+open System.Globalization
 open Terminal.Gui
 open NStack
 open Scale
@@ -29,7 +30,16 @@ let buildMenu() =
                          System.Action newFile)
                     MenuItem(ustr ("_Quit"), null, System.Action quit) |]) |])
 
-let newMovimento() : Option<Movimento> =
+let delMovimento selected =
+    let movimentoStr =
+        MovimentoToString Scale.stato (Scale.stato.movimenti.Item selected)
+    if MessageBox.Query
+           (60, 9, "Elimina movimento",
+            "Sei sicuro di voler eliminare:\n\n" + movimentoStr + " ?", "No",
+            "Yes") <> 0 then
+        Scale.deleteMovimento Scale.stato selected |> Scale.updateStato
+
+let newMovimento() =
     let today = DateTime.Today
     let y, m, d = today.Year, today.Month, today.Day
     let dataLbl = Label(1, 1, ustr "Data:")
@@ -52,22 +62,68 @@ let newMovimento() : Option<Movimento> =
     let causaleTxtFld = TextField(10, 12, 24, ustr "")
 
     let addMovimento() =
-        let m =
-            Prestito(try
-                         int (importoTxtFld.Text.ToString())
-                     with _ -> 0)
-        ignore <| MessageBox.ErrorQuery(10, 10, "Debug", string m, "Ok")
+        let mutable importoErr = false
+        let mutable dataErr = false
 
+        let importo =
+            try
+                int (importoTxtFld.Text.ToString())
+            with _ ->
+                importoErr <- true
+                -1
+
+        let data =
+            try
+                DateTime.Parse
+                    (dayTxtFld.Text.ToString() + "/"
+                     + monthTxtFld.Text.ToString() + "/"
+                     + yearTxtFld.Text.ToString(),
+                     CultureInfo.CreateSpecificCulture("it-IT"))
+            with _ ->
+                dataErr <- true
+                DateTime.Today
+
+        if importo < 0 then importoErr <- true
+        if importoErr || dataErr then
+            ignore <| MessageBox.ErrorQuery(30, 10, "ERRORE",
+                                            "Errore di formato in: \n"
+                                            + (if importoErr then
+                                                   "     | IMPORTO |  \n"
+                                               else "")
+                                            + (if dataErr then
+                                                   "     |  DATA   |"
+                                               else ""), "Ok")
+        else
+            let condomino =
+                match condominoRdoGrp.Selected with
+                | 0 -> Michela
+                | 1 -> Gerardo
+                | 2 -> Elena
+                | 3 -> Giulia
+
+            let operazione =
+                match movimentoRdoGrp.Selected with
+                | 0 -> PagamentoScale
+                | 1 -> VersamentoQuote(condomino, importo)
+                | 2 -> Prestito importo
+                | 3 -> Restituzione importo
+                | 4 -> AltroVersamento(causaleTxtFld.Text.ToString(), importo)
+                | 5 -> AltraSpesa(causaleTxtFld.Text.ToString(), importo)
+
+            let movimento = (dateTimeToData (data), operazione)
+            Scale.addMovimento Scale.stato movimento |> Scale.updateStato
+            Application.RequestStop()
+
+    // ignore <| MessageBox.ErrorQuery(10, 10, "Debug", string data, "Ok")
     // Application.RequestStop()
     let ok = Button(ustr "Ok", true, Clicked = Action addMovimento)
     let annulla = Button(ustr "Annulla", false, Clicked = stop)
-    let d = Dialog(ustr "Aggiungi movimento", 50, 20, ok, annulla)
+    let d = Dialog(ustr "Aggiungi movimento", 50, 19, ok, annulla)
     d.Add
         (dataLbl, yearTxtFld, stroke1Lbl, monthTxtFld, stroke2Lbl, dayTxtFld,
          movimentoRdoGrp, condominoLbl, condominoRdoGrp, importoLbl,
          importoTxtFld, causaleLbl, causaleTxtFld)
     Application.Run(d)
-    None
 
 let movimentiIList() : IList =
     Scale.stato.movimenti
@@ -79,25 +135,20 @@ let movimentiProcessKey (lw : ListView) (kb : KeyEvent) =
     match (char kb.KeyValue) with
     | 'e' when Scale.stato.movimenti.Length > 0 ->
         let selected = lw.SelectedItem
-        let movimentoStr =
-            MovimentoToString Scale.stato (Scale.stato.movimenti.Item selected)
-        if MessageBox.Query
-               (60, 9, "Elimina movimento",
-                "Sei sicuro di voler eliminare:\n\n" + movimentoStr + " ?", "No",
-                "Yes") <> 0 then
-            Scale.deleteMovimento Scale.stato lw.SelectedItem
-            |> Scale.updateStato
-            lw.SetSource(movimentiIList())
-            let len = Scale.stato.movimenti.Length
-            if len > 0 then
-                lw.SelectedItem <- if selected < len then selected
-                                   else len - 1
-            lw.SetNeedsDisplay()
+        delMovimento (selected)
+        lw.SetSource(movimentiIList())
+        let len = Scale.stato.movimenti.Length
+        if len > 0 then
+            lw.SelectedItem <- if selected < len then selected
+                               else len - 1
+        lw.SetNeedsDisplay()
         true
     | '\010' -> // RETURN key
         true
     | 'a' ->
-        ignore <| newMovimento()
+        newMovimento()
+        lw.SetSource(movimentiIList())
+        lw.SetNeedsDisplay()
         true
     | _ -> lw.SuperView.ProcessHotKey(kb)
 
