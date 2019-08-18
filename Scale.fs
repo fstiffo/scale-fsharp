@@ -191,15 +191,15 @@ let DataToString(d) = (dataToDateTime d).ToString("dd-MM-yy")
 let OperazioneToString (s : Stato) op =
     match op with
     | VersamentoQuote(c, i) ->
-        (sprintf "% 4iEU | " i) + "Versamento quote (" + c.ToString() + ")"
+        (sprintf "% 4i EUR | " i) + "Versamento quote (" + c.ToString() + ")"
     | PagamentoScale ->
-        (sprintf "% 4iEU | " -(snd s.attuale).costoScale) + "Pagamento scale"
+        (sprintf "% 4i EUR | " -(snd s.attuale).costoScale) + "Pagamento scale"
     | AltraSpesa(str, i) ->
-        (sprintf "% 4iEU | " -i) + "Altra spesa (" + str + ")"
+        (sprintf "% 4i EUR | " -i) + "Altra spesa (" + str + ")"
     | AltroVersamento(str, i) ->
-        (sprintf "% 4iEU | " i) + "Altro versamento (" + str + ")"
-    | Prestito i -> (sprintf "% 4iEU | " -i) + "Prestito"
-    | Restituzione i -> (sprintf "% 4iEU | " i) + "Restituzione"
+        (sprintf "% 4i EUR | " i) + "Altro versamento (" + str + ")"
+    | Prestito i -> (sprintf "% 4i EUR | " -i) + "Prestito"
+    | Restituzione i -> (sprintf "% 4i EUR | " i) + "Restituzione"
 
 let MovimentoToString s ((d, op) : Movimento) =
     DataToString(d) + " | " + (OperazioneToString s op)
