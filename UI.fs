@@ -39,7 +39,7 @@ let delMovimento selected =
             "Yes") <> 0 then
         Scale.deleteMovimento Scale.stato selected |> Scale.updateStato
 
-let newMovimento() =
+let modMovimento (selected : Option<int>) =
     let today = DateTime.Today
     let y, m, d = today.Year, today.Month, today.Day
     let dataLbl = Label(1, 1, ustr "Data:")
@@ -55,13 +55,44 @@ let newMovimento() =
                 "_4 Restituzione"; "_5 Altro versamento"; "_6 Altra spesa" |])
     let condominoLbl = Label(26, 3, ustr "Condomino:")
     let condominoRdoGrp =
-        RadioGroup(26, 5, [| "_Michela"; "_Gerardo"; "_Elena"; "_Silvia" |])
+        RadioGroup(26, 5, [| "_Michela"; "_Gerardo"; "_Elena"; "G_iulia" |])
     let importoLbl = Label(1, 10, ustr "Importo:")
     let importoTxtFld = TextField(10, 10, 6, ustr "0")
     let causaleLbl = Label(1, 12, ustr "Causale:")
     let causaleTxtFld = TextField(10, 12, 24, ustr "")
-
-    let addMovimento() =
+    match selected with
+    | Some i ->
+        let Data(y, m, d), op = Scale.stato.movimenti.Item(i)
+        yearTxtFld.Text <- ustr <| string y
+        monthTxtFld.Text <- ustr <| string m
+        dayTxtFld.Text <- ustr <| string d
+        match op with
+        | PagamentoScale -> movimentoRdoGrp.Selected <- 0
+        | VersamentoQuote(condomino, importo) ->
+            movimentoRdoGrp.Selected <- 1
+            importoTxtFld.Text <- ustr <| string importo
+            condominoRdoGrp.Selected <- match condomino with
+                                        | Michela -> 0
+                                        | Gerardo -> 1
+                                        | Elena -> 2
+                                        | Giulia -> 3
+        | Prestito importo ->
+            movimentoRdoGrp.Selected <- 2
+            importoTxtFld.Text <- ustr <| string importo
+        | Restituzione importo ->
+            movimentoRdoGrp.Selected <- 3
+            importoTxtFld.Text <- ustr <| string importo
+        | AltroVersamento(causale, importo) ->
+            movimentoRdoGrp.Selected <- 4
+            importoTxtFld.Text <- ustr <| string importo
+            causaleTxtFld.Text <- ustr causale
+        | AltraSpesa(causale, importo) ->
+            movimentoRdoGrp.Selected <- 5
+            importoTxtFld.Text <- ustr <| string importo
+            causaleTxtFld.Text <- ustr causale
+    | None -> ()
+    // Core action associated to the OK  button
+    let addOrReplaceMovimento (selected : Option<int>) (_ : unit) =
         let mutable importoErr = false
         let mutable dataErr = false
 
@@ -111,24 +142,29 @@ let newMovimento() =
                 | 5 -> AltraSpesa(causaleTxtFld.Text.ToString(), importo)
 
             let movimento = (dateTimeToData (data), operazione)
-            Scale.addMovimento Scale.stato movimento |> Scale.updateStato
+            match selected with
+            | Some i ->
+                Scale.replaceMovimento Scale.stato i movimento
+                |> Scale.updateStato
+            | None ->
+                Scale.addMovimento Scale.stato movimento |> Scale.updateStato
             Application.RequestStop()
 
-    // ignore <| MessageBox.ErrorQuery(10, 10, "Debug", string data, "Ok")
-    // Application.RequestStop()
-    let ok = Button(ustr "Ok", true, Clicked = Action addMovimento)
+    let ok =
+        Button
+            (ustr "Ok", true, Clicked = Action(addOrReplaceMovimento selected))
     let annulla = Button(ustr "Annulla", false, Clicked = stop)
     let d = Dialog(ustr "Aggiungi movimento", 50, 19, ok, annulla)
     d.Add
         (dataLbl, yearTxtFld, stroke1Lbl, monthTxtFld, stroke2Lbl, dayTxtFld,
          movimentoRdoGrp, condominoLbl, condominoRdoGrp, importoLbl,
          importoTxtFld, causaleLbl, causaleTxtFld)
+    yearTxtFld.EnsureFocus()
     Application.Run(d)
 
 let movimentiIList() : IList =
     Scale.stato.movimenti
     |> List.map ((MovimentoToString Scale.stato) >> ustr)
-    //|> List.map ustr
     |> List.toArray :> IList
 
 let movimentiProcessKey (lw : ListView) (kb : KeyEvent) =
@@ -144,9 +180,14 @@ let movimentiProcessKey (lw : ListView) (kb : KeyEvent) =
         lw.SetNeedsDisplay()
         true
     | '\010' -> // RETURN key
+        let selected = lw.SelectedItem
+        modMovimento (Some selected)
+        lw.SetSource(movimentiIList())
+        lw.SelectedItem <- selected
+        lw.SetNeedsDisplay()
         true
     | 'a' ->
-        newMovimento()
+        modMovimento (None)
         lw.SetSource(movimentiIList())
         lw.SetNeedsDisplay()
         true
