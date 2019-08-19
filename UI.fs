@@ -101,7 +101,6 @@ let updateRiassunto() =
                                  Attribute.Make(Color.White, Color.BrightRed)
                              else Attribute.Make(Color.White, Color.BrightGreen)
 
-// Application.Run()
 let delMovimento selected =
     let riassView =
         Application.Top.Subviews.Item(1).Subviews.Item(0).Subviews.Item(1)
@@ -115,7 +114,7 @@ let delMovimento selected =
         Scale.deleteMovimento Scale.stato selected |> Scale.updateStato
         updateRiassunto()
 
-//refreshRiassunto()
+// if selected is None a new Movimento is added
 let modMovimento (selected : Option<int>) =
     let today = DateTime.Today
     let y, m, d = today.Year, today.Month, today.Day
@@ -293,7 +292,6 @@ let buildMovimentiView() =
 let startApp() =
     Application.Init()
     let a = Application.Driver
-    // Colors.Base.Focus <- Attribute.Make(Color.BrightGreen, Color.Brown)
     let top = Application.Top
     let win =
         Window
