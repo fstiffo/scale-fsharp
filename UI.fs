@@ -22,7 +22,90 @@ let buildMenu() =
                 (ustr ("_File"),
                  [| MenuItem(ustr ("Esci"), null, System.Action quit) |]) |])
 
+let buildRissuntoView() =
+    let buildQuoteLbl text condomino y =
+        let quote = quote Scale.stato condomino
+        new Label(ustr <| text + (sprintf "% 4i" <| quote), X = Pos.At(1),
+                  Y = Pos.At(y),
+                  TextColor = if quote < 0 then
+                                  Attribute.Make(Color.White, Color.Red)
+                              else Attribute.Make(Color.White, Color.Green))
+
+    let michelaLbl = buildQuoteLbl "Michela:     " Michela 1
+    let gerardoLbl = buildQuoteLbl "Gerardo:     " Gerardo 3
+    let elenaLbl = buildQuoteLbl "Elena:       " Elena 5
+    let giuliaLbl = buildQuoteLbl "Giulia:      " Giulia 7
+    let situazioneQuoteFrm =
+        FrameView(Rect(1, 0, 39, 11), ustr "Situazione Quote")
+    situazioneQuoteFrm.Add(michelaLbl, gerardoLbl, elenaLbl, giuliaLbl)
+    let x0, y0 = Pos.Left(situazioneQuoteFrm), Pos.Bottom(situazioneQuoteFrm)
+    let cassaLbl =
+        new Label(ustr
+                  <| "Cassa:     " + (sprintf "% 4i EUR" <| cassa Scale.stato),
+                  X = x0, Y = y0 + Pos.At(1))
+    let tesorettoLbl =
+        new Label(ustr
+                  <| "Tesoretto: "
+                     + (sprintf "% 4i EUR" <| tesoretto Scale.stato), X = x0,
+                  Y = y0 + Pos.At(3))
+    let prestito = Scale.prestito Scale.stato
+
+    let prestitoLbl =
+        new Label(ustr <| "Prestito:  " + (sprintf "% 4i EUR" <| prestito),
+                  X = x0, Y = y0 + Pos.At(5),
+                  TextColor = if prestito > 0 then
+                                  Attribute.Make(Color.White, Color.BrightRed)
+                              else
+                                  Attribute.Make(Color.White, Color.BrightGreen))
+
+    let frame =
+        FrameView
+            (Rect(1, 0, 43, 20),
+             ustr <| "Riassunto al " + DateTime.Today.ToShortDateString())
+    frame.Add(situazioneQuoteFrm, cassaLbl, tesorettoLbl, prestitoLbl)
+    frame :> View
+
+let updateRiassunto() =
+    let riassContentView =
+        Application.Top.Subviews.Item(1).Subviews.Item(0).Subviews.Item(1)
+                   .Subviews.Item(0)
+    let situazQuoteContentView =
+        riassContentView.Subviews.Item(0).Subviews.Item(0)
+    let michelaLbl : Label = downcast situazQuoteContentView.Subviews.Item(0)
+    let gerardoLbl : Label = downcast situazQuoteContentView.Subviews.Item(1)
+    let elenaLbl : Label = downcast situazQuoteContentView.Subviews.Item(2)
+    let giuliaLbl : Label = downcast situazQuoteContentView.Subviews.Item(3)
+    let cassaLbl : Label = downcast riassContentView.Subviews.Item(1)
+    let tesorettoLbl : Label = downcast riassContentView.Subviews.Item(2)
+    let prestitoLbl : Label = downcast riassContentView.Subviews.Item(3)
+
+    let updateQuoteLbl (lbl : Label) text condomino =
+        let quote = quote Scale.stato condomino
+        lbl.Text <- ustr <| text + (sprintf "% 4i" <| quote)
+        lbl.TextColor <- if quote < 0 then
+                             Attribute.Make(Color.White, Color.Red)
+                         else Attribute.Make(Color.White, Color.Green)
+    updateQuoteLbl michelaLbl "Michela:     " Michela
+    updateQuoteLbl gerardoLbl "Gerardo:     " Gerardo
+    updateQuoteLbl elenaLbl "Elena:       " Elena
+    updateQuoteLbl giuliaLbl "Giulia:      " Giulia
+    cassaLbl.Text <- ustr
+                     <| "Cassa:     "
+                        + (sprintf "% 4i EUR" <| cassa Scale.stato)
+    tesorettoLbl.Text <- ustr
+                         <| "Tesoretto: "
+                            + (sprintf "% 4i EUR" <| tesoretto Scale.stato)
+    let prestito = Scale.prestito Scale.stato
+    prestitoLbl.Text <- ustr <| "Prestito:  " + (sprintf "% 4i EUR" <| prestito)
+    prestitoLbl.TextColor <- if prestito > 0 then
+                                 Attribute.Make(Color.White, Color.BrightRed)
+                             else Attribute.Make(Color.White, Color.BrightGreen)
+
+// Application.Run()
 let delMovimento selected =
+    let riassView =
+        Application.Top.Subviews.Item(1).Subviews.Item(0).Subviews.Item(1)
+    riassView.SetNeedsDisplay()
     let movimentoStr =
         MovimentoToString Scale.stato (Scale.stato.movimenti.Item selected)
     if MessageBox.Query
@@ -30,7 +113,9 @@ let delMovimento selected =
             "\n Sei sicuro di voler eliminare:\n\n " + movimentoStr + " ?",
             "Annulla", "Ok") = 1 then
         Scale.deleteMovimento Scale.stato selected |> Scale.updateStato
+        updateRiassunto()
 
+//refreshRiassunto()
 let modMovimento (selected : Option<int>) =
     let today = DateTime.Today
     let y, m, d = today.Year, today.Month, today.Day
@@ -141,6 +226,7 @@ let modMovimento (selected : Option<int>) =
             | None ->
                 Scale.addMovimento Scale.stato movimento |> Scale.updateStato
             Application.RequestStop()
+            updateRiassunto()
 
     let ok =
         Button
@@ -189,49 +275,6 @@ let movimentiProcessKey (lw : ListView) (kb : KeyEvent) =
         true
     | _ -> lw.SuperView.ProcessHotKey(kb)
 
-let buildRissuntoView() =
-    let buildQuoteLbl text condomino y =
-        let quote = quote Scale.stato condomino
-        new Label(ustr <| text + (sprintf "% 4i" <| quote), X = Pos.At(1),
-                  Y = Pos.At(y),
-                  TextColor = if quote < 0 then
-                                  Attribute.Make(Color.White, Color.Red)
-                              else Attribute.Make(Color.White, Color.Green))
-
-    let michelaLbl = buildQuoteLbl "Michela:     " Michela 1
-    let gerardoLbl = buildQuoteLbl "Gerardo:     " Gerardo 3
-    let elenaLbl = buildQuoteLbl "Elena:       " Elena 5
-    let giuliaLbl = buildQuoteLbl "Giulia:      " Giulia 7
-    let situazioneQuoteFrm =
-        FrameView(Rect(1, 0, 39, 11), ustr "Situazione Quote")
-    situazioneQuoteFrm.Add(michelaLbl, gerardoLbl, elenaLbl, giuliaLbl)
-    let x0, y0 = Pos.Left(situazioneQuoteFrm), Pos.Bottom(situazioneQuoteFrm)
-    let cassaLbl =
-        new Label(ustr
-                  <| "Cassa:     " + (sprintf "% 4i EUR" <| cassa Scale.stato),
-                  X = x0, Y = y0 + Pos.At(1))
-    let tesorettoLbl =
-        new Label(ustr
-                  <| "Tesoretto: "
-                     + (sprintf "% 4i EUR" <| tesoretto Scale.stato), X = x0,
-                  Y = y0 + Pos.At(3))
-    let prestito = Scale.prestito Scale.stato
-
-    let prestitoLbl =
-        new Label(ustr <| "Prestito:  " + (sprintf "% 4i EUR" <| prestito),
-                  X = x0, Y = y0 + Pos.At(5),
-                  TextColor = if prestito > 0 then
-                                  Attribute.Make(Color.White, Color.BrightRed)
-                              else
-                                  Attribute.Make(Color.White, Color.BrightGreen))
-
-    let frame =
-        FrameView
-            (Rect(1, 0, 43, 20),
-             ustr <| "Riassunto al " + DateTime.Today.ToShortDateString())
-    frame.Add(situazioneQuoteFrm, cassaLbl, tesorettoLbl, prestitoLbl)
-    frame :> View
-
 let buildMovimentiView() =
     let listView =
         { new ListView(Rect(1, 0, 64, 16), movimentiIList()) with
@@ -256,7 +299,8 @@ let startApp() =
         Window
             (ustr "SCALE - v. 0.1", X = Pos.op_Implicit (0),
              Y = Pos.op_Implicit (1), Width = Dim.Fill(), Height = Dim.Fill())
-    win.Add(buildRissuntoView(), buildMovimentiView())
+    let rv = buildRissuntoView()
+    win.Add(buildMovimentiView(), buildRissuntoView())
     top.Add(buildMenu())
     top.Add(win)
     Application.Run()
