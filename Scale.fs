@@ -112,8 +112,6 @@ let replaceMovimento (s : Stato) (i : int) (m : Movimento) : Stato =
         first @ m :: second.Tail
     { s with movimenti = replaced }
 
-let modifyMovimento (s : Stato) (i : int) (m : Movimento) = s
-
 let private contabile (s : Stato) ((_, op) : Movimento) : int =
     match op with
     | VersamentoQuote(_, i) -> i
