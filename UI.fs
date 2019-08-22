@@ -291,13 +291,11 @@ let buildMovimentiView() =
 
 let startApp() =
     Application.Init()
-    let a = Application.Driver
     let top = Application.Top
     let win =
         Window
             (ustr "SCALE - v. 0.1", X = Pos.op_Implicit (0),
              Y = Pos.op_Implicit (1), Width = Dim.Fill(), Height = Dim.Fill())
-    let rv = buildRissuntoView()
     win.Add(buildMovimentiView(), buildRissuntoView())
     top.Add(buildMenu())
     top.Add(win)
